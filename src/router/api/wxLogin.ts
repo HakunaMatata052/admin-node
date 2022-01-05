@@ -16,15 +16,13 @@ router.post('/', async ctx => {
             try {
                 await query(`insert into user (openid,ismanage) values ('${res.data.openid}',0)`)
             } catch (err) {
-                new Result(ctx, '登录失败', 0)
+                new Result(ctx).error('登录失败')
                 return
             }
         }
         const token = new Jwt(res.data.openid).generateToken()
 
-        new Result(ctx, '登录成功！', 200, {
-            token
-        })
+        new Result(ctx).success({ token }, '登录成功！')
     }
 })
 

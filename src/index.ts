@@ -11,7 +11,7 @@ const app = new Koa()
 
 app.use(cors()) // 解决跨域
 // 获取静态资源文件夹
-app.use(statics(path.join(__dirname, '/assets')))
+app.use(statics(path.join(__dirname, '/public')))
 // 404重定向
 // app.use(async (ctx, next) => {
 //     await next();
@@ -20,7 +20,17 @@ app.use(statics(path.join(__dirname, '/assets')))
 //     }
 // })
 app.use(formData({
-    'multipart': true // 是否支持 multipart-formdate 的表单
+    'encoding': 'gzip',
+    'multipart': true, // 是否支持 multipart-formdate 的表单
+    'formidable': {
+        'maxFileSize': config.maxFileSize,
+        'uploadDir': path.join(__dirname, config.uploadDir), // 设置文件上传目录
+        'keepExtensions': true, // 保持文件的后缀
+        'onFileBegin': (name, file) => { // 文件上传前的设置
+            console.log(`name: ${name}`)
+            console.log(file)
+        }
+    }
 })) // 处理formdata
 app.use(bodyParser()) // 处理body(必须先处理fordata再处理body)
 app.use(router.routes())

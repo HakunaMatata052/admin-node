@@ -1,10 +1,10 @@
 module.exports = {
     'env': {
-        'node':true,
-        'commonjs':true,
-        'amd':true,
-        'es6':true,
-        'mocha':true,
+        'node': true,
+        'commonjs': true,
+        'amd': true,
+        'es6': true,
+        'mocha': true,
         'es2021': true
     },
     'extends': [
@@ -20,7 +20,7 @@ module.exports = {
         '@typescript-eslint'
     ],
     'rules': {
-        '@typescript-eslint/no-explicit-any':0, // 是否允许出现any类型
+        '@typescript-eslint/no-explicit-any': 0, // 是否允许出现any类型
         '@typescript-eslint/no-var-requires': 0, // 没有定义requires()
         'no-alert': 0, // 禁止使用alert confirm prompt
         'no-array-constructor': 2, // 禁止使用数组构造器
@@ -152,7 +152,7 @@ module.exports = {
         'id-length': 0, // 变量名长度
         'indent': [2, 4], // 缩进风格
         'init-declarations': 0, // 声明时必须赋初值
-        'key-spacing': [0, { 'beforeColon': false, 'afterColon': true }], // 对象字面量中冒号的前后空格
+        'key-spacing': [2, { 'beforeColon': false, 'afterColon': true }], // 对象字面量中冒号的前后空格
         'lines-around-comment': 0, // 行前/行后备注
         'max-depth': [0, 4], // 嵌套块深度
         'max-len': [0, 80, 4], // 字符串最大长度
@@ -168,13 +168,13 @@ module.exports = {
         'operator-assignment': [0, 'always'], // 赋值运算符 += -=什么的
         'operator-linebreak': [2, 'after'], // 换行时运算符在行尾还是行首
         'padded-blocks': 0, // 块语句内行首行尾是否要空行
-        'prefer-const': 0, // 首选const
+        'prefer-const': 2, // 首选const
         'prefer-spread': 0, // 首选展开运算
         'prefer-reflect': 0, // 首选Reflect的方法
         'quotes': [1, 'single'], // 引号类型 `` "" ''
-        'quote-props':[2, 'always'], // 对象字面量中的属性名是否强制双引号
+        'quote-props': [2, 'always'], // 对象字面量中的属性名是否强制双引号
         'radix': 2, // parseInt必须指定第二个参数
-        'id-match': 0, // 命名检测
+        'id-match': 2, // 命名检测
         'require-yield': 0, // 生成器函数必须有yield
         'semi': [2, 'never'], // 语句强制分号结尾
         'semi-spacing': [0, {'before': false, 'after': true}], // 分号前后空格
@@ -186,7 +186,7 @@ module.exports = {
         'space-infix-ops': 0, // 中缀操作符周围要不要有空格
         'keyword-spacing': 2, // return throw case后面要不要加空格
         'space-unary-ops': [0, { 'words': true, 'nonwords': false }], // 一元运算符的前/后要不要加空格
-        'spaced-comment':  ['error', 'always', { 'markers': ['/'] }], // 注释风格要不要有空格什么的
+        'spaced-comment': ['error', 'always', { 'markers': ['/'] }], // 注释风格要不要有空格什么的
         'strict': 2, // 使用严格模式
         'use-isnan': 2, // 禁止比较时使用NaN，只能用isNaN()
         'valid-jsdoc': 0, // jsdoc规则

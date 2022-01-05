@@ -13,9 +13,23 @@ class Result {
     }
     result(){
         this.ctx.body = {
-            'code':this.code,
-            'msg':this.msg,
-            'data':this.data
+            'code': this.code,
+            'msg': this.msg,
+            'data': this.data
+        }
+    }
+    success(data:any, msg?:string){
+        this.ctx.body = {
+            'code': 200,
+            'msg': msg,
+            'data': data
+        }
+    }
+    error(msg:string, code?:number){
+        this.ctx.body = {
+            'code': code || 0,
+            'msg': msg,
+            'data': null
         }
     }
 }

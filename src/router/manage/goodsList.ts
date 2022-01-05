@@ -4,7 +4,7 @@ import Result from '../../common/result'
 const router = new Router()
 
 router.get('/', auth, async ctx => {
-    new Result(ctx, '成功')
+    new Result(ctx)
 })
 
 export default router

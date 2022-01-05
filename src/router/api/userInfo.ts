@@ -20,7 +20,7 @@ router.post('/update', auth, async ctx => {
     const { avatarUrl, nickName } = ctx.request.body
 
     if (!avatarUrl || !nickName) {
-        new Result(ctx, '昵称或头像错误', 0)
+        new Result(ctx).error('昵称或头像错误')
         return
     }
     const res = await query(`update user set username = '${nickName}' , avatar = '${avatarUrl}' where openid = '${ctx.header.openid}'`)
