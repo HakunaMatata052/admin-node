@@ -13,6 +13,7 @@ router.post('/', formData({
     'encoding': 'gzip',
     'multipart': true, // 是否支持 multipart-formdate 的表单
     'formidable': {
+        'hash': 'md5',
         'maxFileSize': config.maxFileSize,
         'uploadDir': path.join(__dirname, '../../public/uploads/' ), // 设置文件上传目录
         'keepExtensions': true, // 保持文件的后缀
