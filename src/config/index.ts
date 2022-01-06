@@ -1,10 +1,17 @@
+import path from 'path'
 const config = {
     'port': 5000,
     'sql': {
-        'host': '127.0.0.1',
-        'user': 'root',
+        'type': 'mysql',
+        'host': 'localhost',
+        'port': 3306,
+        'username': 'root',
         'password': 'root',
-        'database': 'koa2'
+        'database': 'koa2',
+        'entities': [
+            path.join(__dirname, '../entity/*.ts' )
+        ],
+        'synchronize': true
     },
     'miniapp': {
         'appid': 'wx4d9c096a1140d773',

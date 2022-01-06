@@ -1,8 +1,9 @@
 import Router from 'koa-router'
 import md5 from 'md5'
-import query from '../../common/query'
 import Jwt from '../../common/token'
 import Result from '../../common/result'
+import { getConnection } from 'typeorm'
+import { User } from '../../entity/User'
 const router = new Router()
 
 router.post('/', async ctx => {
@@ -15,10 +16,19 @@ router.post('/', async ctx => {
         return
     }
 
-    const user = await query(`select * from user where username = '${ctx.request.body.username}' and password = '${md5(ctx.request.body.password)}' `)
+    const user = await getConnection()
+        .createQueryBuilder()
+        .select('user')
+        .from(User, 'user')
+        .where('user.username = :username AND user.password = :password',
+            {'username': ctx.request.body.username,
+                'password': md5(ctx.request.body.password)})
+        .getOne()
 
-    if (user.length > 0) {
-        const token = new Jwt(user[0].openid).generateToken()
+    console.log(user)
+
+    if (user) {
+        const token = new Jwt(user.openid).generateToken()
 
         new Result(ctx).success({token}, '登录成功')
     } else {

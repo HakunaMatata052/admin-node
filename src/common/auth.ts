@@ -1,35 +1,38 @@
 // 鉴权
 import Jwt from './token'
-import query from './query'
 import Result from './result'
 import { Next, ParameterizedContext } from 'koa'
 import { JwtPayload } from 'jsonwebtoken'
-export const auth = async (ctx:ParameterizedContext, next:Next):Promise<null> => {
+import { getConnection } from 'typeorm'
+import { User } from '../entity/User'
+export const auth = async (ctx:ParameterizedContext, next:Next) => {
     try {
         const token = <string>ctx.headers.token
         const res = <JwtPayload> new Jwt(token).verifyToken()
 
         ctx.header.openid = res.token
+        // eslint-disable-next-line callback-return
+        await next()// 放行函数，继续往下走
     } catch (err) {
-        // try中报错就会走catch，
-        ctx.body = {
-            'code': 500,
-            'msg': 'token无效或登录已过期'
-        }
+        new Result(ctx).error('token无效或登录已过期', 500)
     }
-    return await next()// 放行函数，继续往下走
 }
 
-export const adminAuth = async (ctx:ParameterizedContext, next:Next):Promise<null> => {
+export const adminAuth = async (ctx:ParameterizedContext, next:Next) => {
     try {
-        const userInfo = await query(`select * from user where openid = '${ctx.header.openid}'`)
+        const user = await getConnection()
+            .createQueryBuilder()
+            .select('user')
+            .from(User, 'user')
+            .where('user.openid = :openid', {'openid': ctx.header.openid})
+            .getOne()
 
-        if (!userInfo.length || !userInfo[0].ismanage) {
-            throw new Error()
+        if (!user || !user.ismanage) {
+            throw new Error('权限不足～')
         }
+        // eslint-disable-next-line callback-return
+        await next()// 放行函数，继续往下走
     } catch (err) {
-        // try中报错就会走catch，
-        new Result(ctx, '权限不足', 501)
+        new Result(ctx).error(err.message, 500)
     }
-    return await next()// 放行函数，继续往下走
 }

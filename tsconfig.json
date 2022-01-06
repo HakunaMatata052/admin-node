@@ -4,13 +4,15 @@
       "outDir": "./dist/",// 打包到的目录
       // "sourceMap": true,// 是否生成sourceMap（用于浏览器调试）
       "noImplicitAny": false,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
       "allowSyntheticDefaultImports":true,
       "esModuleInterop": true,
       "removeComments":true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,   
       "declaration": true,// 是否生成声明文件
-      "strict":true, // 严格模式
+      "strict":false, // 严格模式
     //   "declarationDir": "./dist/types/",// 声明文件打包的位置
       "declarationMap": false,// 是否生成声明文件map文件（便于调试）
       "moduleResolution": "node",
@@ -25,7 +27,8 @@
       ],
       "lib": [
         "dom",
-        "es2015"
+        "es2015",
+        "ES6"
       ],
       "allowJs": false
     },

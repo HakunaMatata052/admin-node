@@ -26,7 +26,7 @@ router.post('/', formData({
     const basename = path.basename(files.file.path)
 
     // console.log(files)
-    await query(`insert into attachment (originalname,imgurl) value ('${basename}','/uploads/${basename}')`)
+    // await query(`insert into attachment (originalname,imgurl) value ('${basename}','/uploads/${basename}')`)
     new Result(ctx).success({
         'imgUrl': `${ctx.origin}/uploads/${basename}`
     }, '上传成功')

@@ -1,7 +1,8 @@
 import Router from 'koa-router'
 import md5 from 'md5'
-import query from '../../common/query'
+import { getConnection} from 'typeorm'
 import Result from '../../common/result'
+import { User } from '../../entity/User'
 const router = new Router()
 
 router.post('/', async ctx => {
@@ -13,15 +14,31 @@ router.post('/', async ctx => {
         new Result(ctx).error('请填写正确的密码')
         return
     }
-    const alreadyHaveUser = await query(`select * from user where username = '${ctx.request.body.username}'`)
+    const alreadyHaveUser = await getConnection()
+        .createQueryBuilder()
+        .select('user')
+        .from(User, 'user')
+        .where('user.username = :username', {'username': ctx.request.body.username})
+        .getOne()
+    const {username, password} = ctx.request.body
 
-    if (alreadyHaveUser && alreadyHaveUser.length === 0) {
-        const res = await query(`insert into user (username,password,openid) values ('${ctx.request.body.username}','${md5(ctx.request.body.password)}','${md5(ctx.request.body.username)}')`).catch(() => {
-            new Result(ctx).error('注册失败～')
-        })
+    if (!alreadyHaveUser) {
+        const res = await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(User)
+            .values([{
+                username,
+                'password': md5(password),
+                'openid': md5(username),
+                'timestamp': Date()
+            }])
+            .execute()
 
         if (res) {
-            new Result(ctx).success(null, '注册成功！')
+            new Result(ctx).success([], '注册成功！')
+        } else {
+            new Result(ctx).error('注册失败～')
         }
     } else {
         new Result(ctx).error('账号已存在！')

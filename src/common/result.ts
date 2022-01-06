@@ -29,7 +29,7 @@ class Result {
         this.ctx.body = {
             'code': code || 0,
             'msg': msg,
-            'data': null
+            'data': this.data
         }
     }
 }

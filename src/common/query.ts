@@ -1,31 +1,22 @@
-import mysql from 'mysql'
-import config from '../config'
-const pool = mysql.createPool(config.sql)
+import 'reflect-metadata'
+import path from 'path'
+import { createConnection} from 'typeorm'
 
-// 接收一个sql语句 以及所需的values
-// 这里接收第二参数values的原因是可以使用mysql的占位符 '?'
-// 比如 query(`select * from my_database where id = ?`, [1])
-
-const query = function (sql:string, values?:string) :Promise<Array<any>>{
-    return new Promise((resolve, reject) => {
-        pool.getConnection(function (poolErr, connection) {
-            if (poolErr) {
-                console.error(poolErr)
-                reject(poolErr)
-            } else {
-                connection.query(sql, values, (connectionErr, rows) => {
-                    if (connectionErr) {
-                        console.error(connectionErr)
-                        reject(connectionErr)
-                    } else {
-                        resolve(rows)
-                    }
-                    // 结束会话
-                    connection.release()
-                })
-            }
-        })
-    })
+const query = async ()=>{
+    console.log(path.join(__dirname, '../entity/*.ts' ))
+    return createConnection({
+        'type': 'mysql',
+        'host': 'localhost',
+        'port': 3306,
+        'username': 'root',
+        'password': 'root',
+        'database': 'koa2',
+        'entities': [
+            path.join(__dirname, '../entity/*.ts' )
+        ],
+        'synchronize': true
+    }).catch(error => console.log(error))
 }
 
 export default query
+

@@ -159,7 +159,7 @@ module.exports = {
         'max-nested-callbacks': [0, 2], // 回调嵌套深度
         'max-params': [0, 3], // 函数最多只能有3个参数
         'max-statements': [0, 10], // 函数内最多有几个声明
-        'new-cap': 2, // 函数名首行大写必须使用new方式调用，首行小写必须用不带new方式调用
+        'new-cap': 0, // 函数名首行大写必须使用new方式调用，首行小写必须用不带new方式调用
         'new-parens': 2, // new时必须加小括号
         'newline-after-var': 2, // 变量声明后是否需要空一行
         'object-curly-spacing': [0, 'never'], // 大括号内是否允许不必要的空格
