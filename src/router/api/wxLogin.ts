@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 import axios from 'axios'
-import query from '../../query'
+import query from '../../common/query'
 import Jwt from '../../common/token'
 import Result from '../../common/result'
 import config from '../../config'

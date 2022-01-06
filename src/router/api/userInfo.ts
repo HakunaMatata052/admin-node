@@ -1,6 +1,6 @@
 
 import Router from 'koa-router'
-import query from '../../query'
+import query from '../../common/query'
 import { auth } from '../../common/auth'
 import Result from '../../common/result'
 const router = new Router()

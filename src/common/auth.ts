@@ -1,6 +1,6 @@
 // 鉴权
 import Jwt from './token'
-import query from '../query'
+import query from './query'
 import Result from './result'
 import { Next, ParameterizedContext } from 'koa'
 import { JwtPayload } from 'jsonwebtoken'

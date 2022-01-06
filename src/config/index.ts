@@ -11,7 +11,7 @@ const config = {
         'secret': '0fb3b2dfe43c2d6025d96966e4e444c4'
     },
     'maxFileSize': 2000 * 1024 * 1024, // 设置上传文件大小最大限制，默认2M
-    'uploadDir': 'public/uploads/' // 文件上传目录
+    'uploadDir': '/public/uploads/' // 文件上传目录
 }
 
 export default config

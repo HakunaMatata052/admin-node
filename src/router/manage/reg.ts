@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 import md5 from 'md5'
-import query from '../../query'
+import query from '../../common/query'
 import Result from '../../common/result'
 const router = new Router()
 
