@@ -18,7 +18,7 @@ router.get('/', auth, adminAuth, async ctx => {
         .getOne()
 
     if (userInfo) {
-        new Result(ctx, '', 200, {
+        new Result(ctx).success({
             'id': userInfo.id,
             'avatar': userInfo.avatar,
             'username': userInfo.username,
@@ -27,7 +27,7 @@ router.get('/', auth, adminAuth, async ctx => {
             'timestamp': dateFormat('yyyy-MM-dd hh:mm:ss', userInfo.timestamp)
         })
     } else {
-        new Result(ctx, '用户不存在', 0)
+        new Result(ctx).error('用户不存在')
     }
 })
 
@@ -42,12 +42,12 @@ router.post('/', auth, adminAuth, async ctx => {
     if (user && user.ismanage) {
         if (ctx.request.body.password.length > 0) {
             if (ctx.request.body.password.length > 16) {
-                new Result(ctx, '请填写正确的密码', 0)
+                new Result(ctx).error('请填写正确的密码')
                 return
             }
         }
         if (!ctx.request.body.id) {
-            new Result(ctx, '请填写用户id', 0)
+            new Result(ctx).error('请填写用户id')
             return
         }
 
@@ -65,12 +65,12 @@ router.post('/', auth, adminAuth, async ctx => {
             .execute()
 
         if (res.affected===1) {
-            new Result(ctx, '修改成功')
+            new Result(ctx).success({}, '修改成功')
         } else {
-            new Result(ctx, '修改失败', 0)
+            new Result(ctx).error('修改失败')
         }
     } else {
-        new Result(ctx, '你没有权限', 0)
+        new Result(ctx).error('你没有权限')
     }
 })
 
@@ -84,9 +84,7 @@ router.get('/list', auth, adminAuth, async ctx => {
 
     const res = userList.map(item=>omit({...item, 'timestamp': dateFormat('yyyy-MM-dd hh:mm:ss', item.timestamp)}, ['password']))
 
-    new Result(ctx, '', 200, {
-        'list': res
-    })
+    new Result(ctx).success({'list': res})
 })
 
 export default router

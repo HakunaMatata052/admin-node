@@ -4,32 +4,21 @@ class Result {
     msg:string
     code:number
     data:any
-    constructor(ctx, msg='success', code=200, data:any=[]){
+    constructor(ctx:ParameterizedContext){
         this.ctx =ctx
-        this.code = code
-        this.msg = msg || 'success'
-        this.data = data
-        this.result()
-    }
-    result(){
-        this.ctx.body = {
-            'code': this.code,
-            'msg': this.msg,
-            'data': this.data
-        }
     }
     success(data:any, msg?:string){
         this.ctx.body = {
             'code': 200,
-            'msg': msg,
+            'msg': msg || '请求成功',
             'data': data
         }
     }
-    error(msg:string, code?:number){
+    error(msg?:string, code?:number){
         this.ctx.body = {
             'code': code || 0,
-            'msg': msg,
-            'data': this.data
+            'msg': msg||'请求失败',
+            'data': {}
         }
     }
 }

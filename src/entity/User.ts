@@ -6,12 +6,14 @@ export class User {
         id: number
 
     @Column({
-        'length': 50
+        'length': 50,
+        'nullable': true
     })
         username: string
 
     @Column({
-        'length': 50
+        'length': 50,
+        'nullable': true
     })
         password: string
 

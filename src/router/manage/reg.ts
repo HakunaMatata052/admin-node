@@ -31,7 +31,7 @@ router.post('/', async ctx => {
                 username,
                 'password': md5(password),
                 'openid': md5(username),
-                'timestamp': Date()
+                'timestamp': new Date()
             }])
             .execute()
 

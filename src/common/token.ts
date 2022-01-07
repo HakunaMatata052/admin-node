@@ -10,12 +10,12 @@ class Jwt {
     }
     // 生成token
     generateToken() {
-        let data = this.data
+        const data = this.data
         // 获取时间转成时间戳
-        let created = new Date().getTime()
+        const created = new Date().getTime()
         // 私钥，引入生成的私钥
-        let cert = fs.readFileSync(path.join(__dirname, '../ssl/key.pem'))
-        let token = jwt.sign({
+        const cert = fs.readFileSync(path.join(__dirname, '../ssl/key.pem'))
+        const token = jwt.sign({
             'token': data,
             'validityTime': created + 3000000// 自定义token 的有效时间
         }, cert, { 'algorithm': 'RS256' })
