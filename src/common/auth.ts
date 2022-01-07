@@ -10,7 +10,9 @@ export const auth = async (ctx:ParameterizedContext, next:Next) => {
         const token = <string>ctx.headers.token
         const res = <JwtPayload> new Jwt(token).verifyToken()
 
+        console.log(res)
         ctx.header.openid = res.token
+        console.log(res.token)
         // eslint-disable-next-line callback-return
         await next()// 放行函数，继续往下走
     } catch (err) {

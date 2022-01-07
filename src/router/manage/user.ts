@@ -82,7 +82,13 @@ router.get('/list', auth, adminAuth, async ctx => {
         .getMany()
     // query('select * from user')
 
-    const res = userList.map(item=>omit({...item, 'timestamp': dateFormat('yyyy-MM-dd hh:mm:ss', item.timestamp)}, ['password']))
+    const res = userList.map(item=>{
+        return {
+            ...item,
+            'roles': [item.ismanage ? 'admin' : ''],
+            'timestamp': dateFormat('yyyy-MM-dd hh:mm:ss', item.timestamp)
+        }
+    })
 
     new Result(ctx).success({'list': res})
 })

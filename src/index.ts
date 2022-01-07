@@ -10,7 +10,7 @@ import { ConnectionOptions, createConnection} from 'typeorm'
 
 const app = new Koa()
 
-createConnection(<ConnectionOptions>config.sql).catch(error => console.log(error))
+createConnection(<ConnectionOptions>config.sql).catch(error => console.log('数据库连接失败', error))
 app.use(cors()) // 解决跨域
 // 获取静态资源文件夹
 app.use(statics(path.join(__dirname, '/public')))
@@ -24,7 +24,6 @@ app.use(statics(path.join(__dirname, '/public')))
 app.use(bodyParser()) // 处理body(必须先处理fordata再处理body)
 app.use(router.routes())
 app.use(router.allowedMethods())
-
 app.listen(config.port, () => {
     console.log('Server is running at http://localhost:' + config.port)
 })

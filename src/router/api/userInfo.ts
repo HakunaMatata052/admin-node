@@ -16,9 +16,9 @@ router.get('/', auth, async ctx => {
 
     if (userInfo) {
         new Result(ctx).success({
-            'username': userInfo[0].username,
-            'avatar': userInfo[0].avatar,
-            'roles': [userInfo[0].ismanage ? 'admin' : '']
+            'username': userInfo.username,
+            'avatar': userInfo.avatar,
+            'roles': [userInfo.ismanage ? 'admin' : '']
         })
     } else {
         new Result(ctx).error()

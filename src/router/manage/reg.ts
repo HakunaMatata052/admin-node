@@ -6,6 +6,8 @@ import { User } from '../../entity/User'
 const router = new Router()
 
 router.post('/', async ctx => {
+
+    console.log(ctx.request.body)
     if (!ctx.request.body.username || ctx.request.body.username.length < 3 || ctx.request.body.username.length > 8) {
         new Result(ctx).error('请填写正确的用户名')
         return
