@@ -35,6 +35,7 @@ export default class UserController {
     @path({
         'id': {'required': true, 'example': '6'}
     })
+    @middlewares([permissions])
     async getUser (ctx: Context):Promise<void>{
         const userRepository: Repository<User> = getManager().getRepository(User)
         const user: User = await userRepository.findOne({
@@ -57,6 +58,7 @@ export default class UserController {
         'password': {'required': false},
         'ismanage': {'required': false}
     })
+    @middlewares([permissions])
     async setUser (ctx: Context):Promise<void>{
         const userRepository: Repository<User> = getManager().getRepository(User)
         const requestBody = pick(ctx.request.body, ['id', 'username', 'avatar', 'password', 'ismanage'])
