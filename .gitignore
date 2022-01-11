@@ -1,23 +1,21 @@
-.DS_Store
+# API keys and secrets
+.env
+
+# Dependency directory
 node_modules
-/dist
-/src/public/uploads
+bower_components
 
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Editor directories and files
+# Editors
 .idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist/**/*
+
+# Logging files
+*.log
+*.pyc

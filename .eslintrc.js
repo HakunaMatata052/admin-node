@@ -1,10 +1,8 @@
 module.exports = {
     'env': {
         'node': true,
-        'commonjs': true,
         'amd': true,
         'es6': true,
-        'mocha': true,
         'es2021': true
     },
     'extends': [
@@ -119,7 +117,7 @@ module.exports = {
         'no-useless-call': 2, // 禁止不必要的call和apply
         'no-void': 2, // 禁用void操作符
         'no-var': 0, // 禁用var，用let和const代替
-        'no-warning-comments': [1, { 'terms': ['todo', 'fixme', 'xxx'], 'location': 'start' }], // 不能有警告备注
+        'no-warning-comments': [1, {'terms': ['todo', 'fixme', 'xxx'], 'location': 'start'}], // 不能有警告备注
         'no-with': 2, // 禁用with
 
         'array-bracket-spacing': [2, 'never'], // 是否允许非空数组里面有多余的空格
@@ -128,7 +126,7 @@ module.exports = {
         'accessor-pairs': 0, // 在对象中使用getter/setter
         'block-scoped-var': 0, // 块语句中使用var
         'brace-style': [1, '1tbs'], // 大括号风格
-        'callback-return': 1, // 避免多次调用回调什么的
+        'callback-return': 0, // 避免多次调用回调什么的
         'camelcase': 2, // 强制驼峰法命名
         'comma-dangle': [2, 'never'], // 对象字面量项尾不能有逗号
         'comma-spacing': 2, // 逗号前后的空格
@@ -141,7 +139,7 @@ module.exports = {
         'curly': [2, 'all'], // 必须使用 if(){} 中的{}
         'default-case': 2, // switch语句最后必须有default
         'dot-location': 0, // 对象访问符的位置，换行的时候在行首还是行尾
-        'dot-notation': [0, { 'allowKeywords': true }], // 避免不必要的方括号
+        'dot-notation': [0, {'allowKeywords': true}], // 避免不必要的方括号
         'eol-last': 0, // 文件以单一的换行符结束
         'eqeqeq': 2, // 必须使用全等
         'func-names': 0, // 函数表达式必须有名字
@@ -152,7 +150,7 @@ module.exports = {
         'id-length': 0, // 变量名长度
         'indent': [2, 4], // 缩进风格
         'init-declarations': 0, // 声明时必须赋初值
-        'key-spacing': [2, { 'beforeColon': false, 'afterColon': true }], // 对象字面量中冒号的前后空格
+        'key-spacing': [2, {'beforeColon': false, 'afterColon': true}], // 对象字面量中冒号的前后空格
         'lines-around-comment': 0, // 行前/行后备注
         'max-depth': [0, 4], // 嵌套块深度
         'max-len': [0, 80, 4], // 字符串最大长度
@@ -162,7 +160,7 @@ module.exports = {
         'new-cap': 0, // 函数名首行大写必须使用new方式调用，首行小写必须用不带new方式调用
         'new-parens': 2, // new时必须加小括号
         'newline-after-var': 2, // 变量声明后是否需要空一行
-        'object-curly-spacing': [0, 'never'], // 大括号内是否允许不必要的空格
+        'object-curly-spacing': [2, 'never'], // 大括号内是否允许不必要的空格
         'object-shorthand': 0, // 强制对象字面量缩写语法
         'one-var': 0, // 连续声明
         'operator-assignment': [0, 'always'], // 赋值运算符 += -=什么的
@@ -183,10 +181,10 @@ module.exports = {
         'space-before-blocks': [0, 'always'], // 不以新行开始的块{前面要不要有空格
         'space-before-function-paren': [0, 'always'], // 函数定义时括号前面要不要有空格
         'space-in-parens': [0, 'never'], // 小括号里面要不要有空格
-        'space-infix-ops': 0, // 中缀操作符周围要不要有空格
+        'space-infix-ops': 2, // 中缀操作符周围要不要有空格
         'keyword-spacing': 2, // return throw case后面要不要加空格
-        'space-unary-ops': [0, { 'words': true, 'nonwords': false }], // 一元运算符的前/后要不要加空格
-        'spaced-comment': ['error', 'always', { 'markers': ['/'] }], // 注释风格要不要有空格什么的
+        'space-unary-ops': [0, {'words': true, 'nonwords': true}], // 一元运算符的前/后要不要加空格
+        'spaced-comment': ['error', 'always', {'markers': ['/']}], // 注释风格要不要有空格什么的
         'strict': 2, // 使用严格模式
         'use-isnan': 2, // 禁止比较时使用NaN，只能用isNaN()
         'valid-jsdoc': 0, // jsdoc规则

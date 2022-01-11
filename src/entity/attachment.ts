@@ -1,22 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
-
+import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
 @Entity()
 export class Attachment {
     @PrimaryGeneratedColumn()
-        id: number
+    id: number
 
     @Column({
         'length': 50
     })
-        originalname: string
+    originalname: string
 
     @Column({
         'length': 100
     })
-        imgurl: string
+    imgurl: string
 
     @Column({
         'nullable': true
     })
-        timestamp: Date
+    timestamp: Date
 }

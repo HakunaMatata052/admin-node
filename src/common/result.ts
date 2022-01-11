@@ -1,24 +1,23 @@
-import { ParameterizedContext } from 'koa'
+import {ParameterizedContext} from 'koa'
 class Result {
     ctx:ParameterizedContext
     msg:string
     code:number
-    data:any
+    data:unknown
     constructor(ctx:ParameterizedContext){
-        this.ctx =ctx
+        this.ctx = ctx
     }
-    success(data:any, msg?:string){
+    success(data?:unknown, msg?:string):void{
         this.ctx.body = {
             'code': 200,
-            'msg': msg || '请求成功',
-            'data': data
+            'msg': msg || 'success',
+            'data': data || {}
         }
     }
-    error(msg?:string, code?:number){
+    error(msg?:string, code?:number):void{
         this.ctx.body = {
             'code': code || 0,
-            'msg': msg||'请求失败',
-            'data': {}
+            'msg': msg || '请求失败'
         }
     }
 }
