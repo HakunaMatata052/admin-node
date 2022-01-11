@@ -6,11 +6,12 @@ dotenv.config({'path': '.env'})
 
 const isDevMode = process.env.NODE_ENV === 'development'
 
-interface MiniApp {
+console.log(isDevMode)
+export interface MiniApp {
     appid:string
     secret:string
 }
-interface Config {
+export interface Config {
     port:number
     sql:ConnectionOptions
     debugLogging:boolean
@@ -20,18 +21,30 @@ interface Config {
     maxFileSize:number
     uploadDir:string
 }
-const config:Config = {
+
+export const sql :ConnectionOptions = isDevMode ? {
+    'type': 'mysql',
+    'host': 'localhost',
+    'port': 3306,
+    'username': 'root',
+    'password': 'root',
+    'database': 'server',
+    'entities': [path.join(__dirname, 'entity/**/*')],
+    'synchronize': true
+} : {
+    'type': 'mysql',
+    'host': 'localhost',
+    'port': 3306,
+    'username': 'wenjuan',
+    'password': 'xHNLXRh7tjs4bKdF',
+    'database': 'wenjuan',
+    'entities': [path.join(__dirname, 'entity/**/*')],
+    'synchronize': true
+}
+
+export const config:Config = {
     'port': Number(process.env.PORT || 3000),
-    'sql': {
-        'type': 'mysql',
-        'host': 'localhost',
-        'port': 3306,
-        'username': 'root',
-        'password': 'root',
-        'database': 'server',
-        'entities': [path.join(__dirname, 'entity/**/*')],
-        'synchronize': true
-    },
+    'sql': sql,
     'debugLogging': isDevMode,
     'jwtSecret': fs.readFileSync(path.join(__dirname, './ssl/key.pem')),
     'cronJobExpression': '0 * * * *',
@@ -42,5 +55,3 @@ const config:Config = {
     'maxFileSize': 2000 * 1024 * 1024, // 设置上传文件大小最大限制，默认2M
     'uploadDir': path.join(__dirname, 'public/uploads') // 文件上传目录
 }
-
-export {config}
