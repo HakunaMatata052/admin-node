@@ -11,11 +11,15 @@ export const generateToken = (data:string):string=>{
     return token
 }
 export const checkToken = async (ctx:Context, next:Next):Promise<void>=>{
+    if (/^\/swagger-/.test(ctx.request.url)) {
+        await next()
+        return
+    }
     const userRepository: Repository<User> = getManager().getRepository(User)
     // load all users
     const user: User = await userRepository.findOne({'openid': ctx.state.user.openid})
 
-    if (user){
+    if (user ){
         ctx.state.user = user
         await next()
     } else {
