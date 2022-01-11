@@ -15,7 +15,7 @@ Thumbs.db
 
 # Ignore built ts files
 dist/**/*
-
+src/public/uploads/*
 # Logging files
 *.log
 *.pyc

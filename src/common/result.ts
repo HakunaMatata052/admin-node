@@ -1,3 +1,4 @@
+import {ValidationError} from 'class-validator'
 import {ParameterizedContext} from 'koa'
 class Result {
     ctx:ParameterizedContext
@@ -14,10 +15,15 @@ class Result {
             'data': data || {}
         }
     }
-    error(msg?:string, code?:number):void{
+    error(msg?:string|ValidationError[], code?:number):void{
+        let message = msg
+
+        if (msg instanceof ValidationError === true){
+            message = (msg as ValidationError[]).map(item=>Object.values(item.constraints)).join(',')
+        }
         this.ctx.body = {
             'code': code || 0,
-            'msg': msg || '请求失败'
+            'msg': message || '请求失败'
         }
     }
 }

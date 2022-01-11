@@ -15,7 +15,6 @@ export const checkToken = async (ctx:Context, next:Next):Promise<void>=>{
     // load all users
     const users: User = await userRepository.findOne({'username': ctx.state.user.openid})
 
-    console.log(users)
     if (users){
         await next()
     } else {

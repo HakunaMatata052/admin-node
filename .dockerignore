@@ -3,6 +3,7 @@ Dockerfile
 .dockerignore
 .github
 dist
+src/public/upload/*
 integrationtests
 loadtests
 .example.env

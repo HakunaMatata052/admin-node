@@ -14,6 +14,9 @@ export class Attachment {
     })
     imgurl: string
 
+    @Column()
+    size: number
+
     @Column({
         'nullable': true
     })

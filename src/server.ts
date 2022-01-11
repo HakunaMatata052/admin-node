@@ -25,10 +25,9 @@ import {error} from './common/error'
 // note that its not active database connection
 // TypeORM creates you connection pull to uses connections from pull on your requests
 createConnection(config.sql).then(async () => {
-
     const app = new Koa()
-
     // Provides important security headers to make your app more secure
+
     app.use(helmet.contentSecurityPolicy({
         'directives': {
             'defaultSrc': ['\'self\''],

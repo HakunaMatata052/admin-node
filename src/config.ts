@@ -29,9 +29,7 @@ const config:Config = {
         'username': 'root',
         'password': 'root',
         'database': 'server',
-        'entities': [
-            ... isDevMode ? ['src/entity/**/*.ts'] : ['dist/entity/**/*.js']
-        ],
+        'entities': [path.join(__dirname, 'entity/**/*')],
         'synchronize': true
     },
     'debugLogging': isDevMode,

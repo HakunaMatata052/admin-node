@@ -1,5 +1,5 @@
 import {Context} from 'koa'
-import {body, description, request, security, summary, tagsAll} from 'koa-swagger-decorator'
+import {body, request, summary, tagsAll} from 'koa-swagger-decorator'
 import {User} from '../entity/user'
 import {getManager, Repository} from 'typeorm'
 import {generateToken} from '../common/auth'
@@ -8,12 +8,10 @@ import axios from 'axios'
 import Result from '../common/result'
 import {config} from '../config'
 @tagsAll(['login'])
-export default class login {
+export default class loginController {
 
     @request('post', '/login')
     @summary('登录')
-    @description('A simple welcome message to verify the service is up and running.')
-    @security([{}])
     @body({
         'username': {'type': 'string', 'required': true, 'example': 'admin'},
         'password': {'type': 'string', 'required': true, 'example': '123456'}

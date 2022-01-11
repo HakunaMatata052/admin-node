@@ -14,15 +14,9 @@ export default class UserController {
     @request('get', '/user/list')
     @summary('用户列表')
     public static async getUsers (ctx: Context): Promise<void> {
-
-        // get a user repository to perform operations with user
         const userRepository: Repository<User> = getManager().getRepository(User)
-
-        // load all users
         const users: User[] = await userRepository.find()
 
-        console.log(users)
-        // return OK status code and loaded users array
         new Result(ctx).success(users.map(item=>{
             return {
                 'id': item.id,
@@ -71,7 +65,7 @@ export default class UserController {
 
             console.log(requestBody, errors)
             if (errors.length > 0){
-                new Result(ctx).error(errors.map(item=>Object.values(item.constraints)).join(','))
+                new Result(ctx).error(errors)
                 return
             }
             // update
@@ -104,7 +98,7 @@ export default class UserController {
             })
 
             if (errors.length > 0){
-                new Result(ctx).error(errors.map(item=>Object.values(item.constraints)).join(','))
+                new Result(ctx).error(errors)
                 return
             }
 
