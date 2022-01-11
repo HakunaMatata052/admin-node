@@ -13,9 +13,10 @@ export const generateToken = (data:string):string=>{
 export const checkToken = async (ctx:Context, next:Next):Promise<void>=>{
     const userRepository: Repository<User> = getManager().getRepository(User)
     // load all users
-    const users: User = await userRepository.findOne({'username': ctx.state.user.openid})
+    const user: User = await userRepository.findOne({'openid': ctx.state.user.openid})
 
-    if (users){
+    if (user){
+        ctx.state.user = user
         await next()
     } else {
         new Result(ctx).error('token不正确', 401)

@@ -52,10 +52,11 @@ createConnection(config.sql).then(async () => {
     // JWT middleware -> below this line routes are only reached if JWT token is valid, secret as env variable
     // do not protect swagger-json and swagger-html endpoints
     app.use(jwt({'secret': config.jwtSecret}).unless({'path': [/^\/swagger-/]}))
-    // 需要鉴权的路由
-    app.use(protectedRouter.routes()).use(protectedRouter.allowedMethods())
     // 鉴权
     app.use(checkToken)
+    // 需要鉴权的路由
+    app.use(protectedRouter.routes()).use(protectedRouter.allowedMethods())
+
     // 定时任务开启
     cron.start()
 

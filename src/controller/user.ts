@@ -1,11 +1,12 @@
 import {Context} from 'koa'
 import {getManager, Repository} from 'typeorm'
 import {validate, ValidationError} from 'class-validator'
-import {request, summary, path, body, responsesAll, tagsAll} from 'koa-swagger-decorator'
+import {request, summary, path, body, tagsAll, middlewares} from 'koa-swagger-decorator'
 import {User} from '../entity/user'
 import Result from '../common/result'
 import {pick, identity, pickBy} from 'lodash'
 import md5 from 'md5'
+import {permissions} from '../common/permissions'
 
 // @responsesAll({'200': {'description': 'success'}, '400': {'description': 'bad request'}, '401': {'description': 'unauthorized, missing/wrong jwt token'}})
 @tagsAll(['User'])
@@ -13,6 +14,7 @@ export default class UserController {
 
     @request('get', '/user/list')
     @summary('用户列表')
+    @middlewares([permissions])
     public static async getUsers (ctx: Context): Promise<void> {
         const userRepository: Repository<User> = getManager().getRepository(User)
         const users: User[] = await userRepository.find()

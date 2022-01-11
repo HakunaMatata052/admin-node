@@ -19,10 +19,10 @@ export default class loginController {
     public static async login(ctx: Context): Promise<void> {
         const {username, password} = ctx.request.body
         const userRepository:Repository<User> = getManager().getRepository(User)
-        const user = userRepository.findOne({username, 'password': md5(password)})
+        const user:User = await userRepository.findOne({username, 'password': md5(password)})
 
         if (user){
-            const token = generateToken(username)
+            const token = generateToken(user.openid)
 
             new Result(ctx).success(token)
         } else {
