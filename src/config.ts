@@ -1,19 +1,41 @@
 import dotenv from 'dotenv'
 import path from 'path'
 import fs from 'fs'
+import {ConnectionOptions} from 'typeorm'
 dotenv.config({'path': '.env'})
 
 const isDevMode = process.env.NODE_ENV === 'development'
 
-const config = {
+interface MiniApp {
+    appid:string
+    secret:string
+}
+interface Config {
+    port:number
+    sql:ConnectionOptions
+    debugLogging:boolean
+    jwtSecret:Buffer
+    cronJobExpression:string
+    miniapp:MiniApp
+    maxFileSize:number
+    uploadDir:string
+}
+const config:Config = {
     'port': Number(process.env.PORT || 3000),
+    'sql': {
+        'type': 'mysql',
+        'host': 'localhost',
+        'port': 3306,
+        'username': 'root',
+        'password': 'root',
+        'database': 'server',
+        'entities': [
+            ... isDevMode ? ['src/entity/**/*.ts'] : ['dist/entity/**/*.js']
+        ],
+        'synchronize': true
+    },
     'debugLogging': isDevMode,
-    'dbsslconn': ! isDevMode,
     'jwtSecret': fs.readFileSync(path.join(__dirname, './ssl/key.pem')),
-    'databaseUrl': process.env.DATABASE_URL || 'postgres://user:pass@localhost:5432/apidb',
-    'dbEntitiesPath': [
-        ... isDevMode ? ['src/entity/**/*.ts'] : ['dist/entity/**/*.js']
-    ],
     'cronJobExpression': '0 * * * *',
     'miniapp': {
         'appid': 'wx4d9c096a1140d773',

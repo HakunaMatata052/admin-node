@@ -4,7 +4,7 @@ import bodyParser from 'koa-bodyparser'
 import helmet from 'koa-helmet'
 import cors from '@koa/cors'
 import winston from 'winston'
-import {createConnection, ConnectionOptions} from 'typeorm'
+import {createConnection} from 'typeorm'
 import 'reflect-metadata'
 
 import {logger} from './logger'
@@ -15,29 +15,16 @@ import {cron} from './cron'
 import {checkToken, customError} from './common/auth'
 import {error} from './common/error'
 
-const connectionOptions: ConnectionOptions = {
-    'type': 'mysql',
-    'host': 'localhost',
-    'port': 3306,
-    'username': 'root',
-    'password': 'root',
-    'database': 'server',
-    'entities': [
-        ...['src/entity/**/*.ts']
-    ],
-    'synchronize': true
-}
-
-if (connectionOptions.ssl) {
-    connectionOptions.extra.ssl = {
-        'rejectUnauthorized': false // Heroku uses self signed certificates
-    }
-}
+// if (connectionOptions.ssl) {
+//     connectionOptions.extra.ssl = {
+//         'rejectUnauthorized': false // Heroku uses self signed certificates
+//     }
+// }
 
 // create connection with database
 // note that its not active database connection
 // TypeORM creates you connection pull to uses connections from pull on your requests
-createConnection(connectionOptions).then(async () => {
+createConnection(config.sql).then(async () => {
 
     const app = new Koa()
 
