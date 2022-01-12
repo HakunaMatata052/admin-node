@@ -37,10 +37,9 @@ export default class UserController {
     })
     @middlewares([permissions])
     async getUser (ctx: Context):Promise<void>{
+        const id = ctx.params.id
         const userRepository: Repository<User> = getManager().getRepository(User)
-        const user: User = await userRepository.findOne({
-            'id': Number(ctx.params.id)
-        })
+        const user: User = await userRepository.findOne({id})
 
         if (user){
             new Result(ctx).success(user)
@@ -107,7 +106,7 @@ export default class UserController {
             }
 
             newUser.password = md5(newUser.password)
-            newUser.timestamp = new Date()
+            // newUser.timestamp = new Date()
             newUser.openid = md5(newUser.username)
 
             await userRepository.save(newUser)

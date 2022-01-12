@@ -6,7 +6,7 @@ import {generateToken} from '../common/auth'
 import md5 from 'md5'
 import axios from 'axios'
 import Result from '../common/result'
-import {config} from '../config'
+import {Config} from '../config'
 @tagsAll(['login'])
 export default class loginController {
 
@@ -50,9 +50,9 @@ export default class loginController {
         newUser.username = username
         newUser.password = md5(password)
         newUser.openid = md5(username)
-        newUser.timestamp = new Date()
+        // newUser.timestamp = new Date()
         await userRepository.save(newUser)
-        const token = generateToken(username)
+        const token = generateToken(newUser.openid)
 
         new Result(ctx).success(token)
     }
@@ -64,13 +64,18 @@ export default class loginController {
     })
     public static async wxLogin(ctx: Context): Promise<void> {
         const {code} = ctx.request.body
+        const {appid, secret} = Config.miniapp
 
+        if (!appid || !secret){
+            new Result(ctx).error('请先在后台配置appid和secret')
+            return
+        }
         if (!code) {
             new Result(ctx).error('code无效')
             return
         }
         try {
-            const res = await axios.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${config.miniapp.appid}&secret=${config.miniapp.secret}&js_code=${code}&grant_type=authorization_code`)
+            const res = await axios.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${code}&grant_type=authorization_code`)
 
             if (res && res.data && res.data.errcode === 0){
 
@@ -83,7 +88,7 @@ export default class loginController {
                     const newUser:User = new User()
 
                     newUser.openid = res.data.openid
-                    newUser.timestamp = new Date()
+                    // newUser.timestamp = new Date()
                     await userRepository.save(newUser)
 
                 }

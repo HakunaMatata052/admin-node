@@ -55,7 +55,7 @@ export class User {
     avatar: string
 
     @Column({
-        'nullable': true
+        'default': ()=>'NOW()'
     })
     timestamp: Date
 }

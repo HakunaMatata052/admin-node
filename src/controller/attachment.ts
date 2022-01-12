@@ -1,10 +1,11 @@
 import {Context} from 'koa'
-import {request, summary, tagsAll, formData, body, path} from 'koa-swagger-decorator'
+import {request, summary, tagsAll, formData, body, path, middlewares} from 'koa-swagger-decorator'
 import {Attachment} from '../entity/attachment'
 import {getManager, Repository} from 'typeorm'
 import Result from '../common/result'
 import fs from 'fs'
 import Path from 'path'
+import {permissions} from '../common/permissions'
 @tagsAll(['attachment'])
 export default class AttachmentController {
 
@@ -22,7 +23,7 @@ export default class AttachmentController {
 
         newAttachment.originalname = files.file.name
         newAttachment.imgurl = `/uploads/${basename}`
-        newAttachment.timestamp = new Date()
+        // newAttachment.timestamp = new Date()
         newAttachment.size = files.file.size
         try {
             await attachmentRepository.save(newAttachment)
@@ -41,6 +42,7 @@ export default class AttachmentController {
         'page': {'required': false},
         'pageSize': {'required': false}
     })
+    @middlewares([permissions])
     public static async getAttachmentList(ctx: Context): Promise<void> {
         const {page, pageSize} = ctx.request.body
         const defaultPage = 5 // 默认分页大小
@@ -61,6 +63,7 @@ export default class AttachmentController {
     @path({
         'id': {'type': 'number', 'required': true}
     })
+    @middlewares([permissions])
     public static async delAttachment(ctx: Context): Promise<void> {
         const id = Number(ctx.params.id)
 

@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken' // 引入jsonwebtoken模块
 import {Context, Next} from 'koa'
 import {User} from '../entity/user'
 import {getManager, Repository} from 'typeorm'
-import {config} from '../config'
+import {Config} from '../config'
 import Result from './result'
 
 export const generateToken = (data:string):string=>{
-    const token = jwt.sign({'openid': data}, config.jwtSecret, {'expiresIn': '7d'})
+    const token = jwt.sign({'openid': data}, Config.jwtSecret, {'expiresIn': '7d'})
 
     return token
 }

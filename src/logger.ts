@@ -1,11 +1,11 @@
 import {Context} from 'koa'
-import {config} from './config'
+import {Config} from './config'
 import {transports, format} from 'winston'
 import * as path from 'path'
 
 const logger = (winstonInstance: any): any => {
     winstonInstance.configure({
-        'level': config.debugLogging ? 'debug' : 'info',
+        'level': Config.debugLogging ? 'debug' : 'info',
         'transports': [
             //
             // - Write all logs error (and below) to `error.log`.

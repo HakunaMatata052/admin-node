@@ -34,8 +34,12 @@ export class System {
     value: string
 
     @Column({
+        'default': false
+    })
+    constant: boolean
+
+    @Column({
         'default': 0
     })
-
     sort: number
 }

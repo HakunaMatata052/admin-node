@@ -18,7 +18,7 @@ export class Attachment {
     size: number
 
     @Column({
-        'nullable': true
+        'default': ()=>'NOW()'
     })
     timestamp: Date
 }
