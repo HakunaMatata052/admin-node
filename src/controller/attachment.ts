@@ -47,13 +47,19 @@ export default class AttachmentController {
         const {page, pageSize} = ctx.request.body
         const defaultPage = 5 // 默认分页大小
         const attachmentRepository:Repository<Attachment> = getManager().getRepository(Attachment)
-        const attachmentList = await attachmentRepository.findAndCount({
+        const attachmentList:[Attachment[], number] = await attachmentRepository.findAndCount({
             'skip': (Number(page) - 1) * Number(pageSize || defaultPage) || 0,
             'take': Number(pageSize) || defaultPage
         })
 
         new Result(ctx).success({
-            'list': attachmentList[0],
+            'list': attachmentList[0]?.map((item:Attachment)=>{
+                return {
+                    ...item,
+                    'imgurl': `${ctx.origin}${item.imgurl}`,
+                    'timestamp': item.timestamp.getTime()
+                }
+            }),
             'totel': attachmentList[1]
         })
     }

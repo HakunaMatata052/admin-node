@@ -4,6 +4,7 @@ import bodyParser from 'koa-bodyparser'
 import helmet from 'koa-helmet'
 import cors from '@koa/cors'
 import winston from 'winston'
+import statics from 'koa-static'
 import {createConnection} from 'typeorm'
 import 'reflect-metadata'
 
@@ -41,6 +42,8 @@ createConnection(Config.sql).then(async () => {
 
     // 跨域解决
     app.use(cors())
+    // 获取静态资源文件夹
+    app.use(statics(Config.staticDir))
     // 错误日志打印
     app.use(logger(winston))
     app.use(bodyParser())

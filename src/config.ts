@@ -45,6 +45,7 @@ export class Config {
     static port =Number(process.env.PORT || 3000)
     static sql=sql
     static debugLogging= isDevMode
+    static staticDir = path.join(__dirname, '/public')
     static jwtSecret= fs.readFileSync(path.join(__dirname, './ssl/key.pem'))
     static cronJobExpression= '0 * * * *'
     static miniapp:MiniApp= {

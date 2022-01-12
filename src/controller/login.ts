@@ -24,7 +24,7 @@ export default class loginController {
         if (user){
             const token = generateToken(user.openid)
 
-            new Result(ctx).success(token)
+            new Result(ctx).success({token})
         } else {
             new Result(ctx).error('用户名或密码错误')
         }
@@ -54,7 +54,7 @@ export default class loginController {
         await userRepository.save(newUser)
         const token = generateToken(newUser.openid)
 
-        new Result(ctx).success(token)
+        new Result(ctx).success({token})
     }
 
     @request('post', '/wxlogin')
@@ -94,7 +94,7 @@ export default class loginController {
                 }
                 const token = generateToken(openid)
 
-                new Result(ctx).success(token)
+                new Result(ctx).success({token})
 
             } else {
                 throw new Error(res.data.errmsg)
