@@ -18,7 +18,7 @@ class Result {
     error(msg?:string|ValidationError[], code?:number):void{
         let message = msg
 
-        if (msg instanceof ValidationError === true){
+        if (msg instanceof ValidationError === true || msg instanceof Array){
             message = (msg as ValidationError[]).map(item=>Object.values(item.constraints)).join(',')
         }
         this.ctx.body = {

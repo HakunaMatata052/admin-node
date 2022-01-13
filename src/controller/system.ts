@@ -6,6 +6,7 @@ import {getManager, Repository} from 'typeorm'
 import Result from '../common/result'
 import {System} from '../entity/system'
 import {permissions} from '../common/permissions'
+import {pick} from 'lodash'
 @tagsAll(['system'])
 export default class systemController {
 
@@ -22,7 +23,6 @@ export default class systemController {
     @request('post', '/basic/add')
     @summary('添加基本配置')
     @body({
-        'id': {'type': 'number', 'required': false},
         'name': {'type': 'string', 'required': true},
         'title': {'type': 'string', 'required': true},
         'value': {'type': 'string', 'required': true},
@@ -30,29 +30,48 @@ export default class systemController {
     })
     @middlewares([permissions])
     public static async addBasic(ctx: Context): Promise<void> {
-        const {id, name, title, value, sort} = ctx.request.body
+        const {name, title, value, sort} = ctx.request.body
         const systemRepository:Repository<System> = getManager().getRepository(System)
-        const newSyetem = new System()
+        const system:System = new System()
 
-        newSyetem.id = +Number(id) || 0
-        newSyetem.name = name
-        newSyetem.title = title
-        newSyetem.value = value
-        newSyetem.sort = Number(sort) || 0
+        system.name = name
+        system.title = title
+        system.value = value
+        system.sort = sort
+        const errors: ValidationError[] = await validate(system)
 
-        const errors: ValidationError[] = await validate(newSyetem)
+        console.log(errors)
+        if (errors.length > 0){
+            new Result(ctx).error(errors)
+            return
+        }
+        await Config.updateConfig()
+        await systemRepository.save(system)
+        new Result(ctx).success()
+    }
+    @request('post', '/basic/edit')
+    @summary('修改基本配置')
+    @body([{
+        'id': {'type': 'number', 'required': false},
+        'value': {'type': 'string', 'required': true},
+        'sort': {'type': 'number', 'required': false}
+    }])
+
+    @middlewares([permissions])
+    public static async aeditBasic(ctx: Context): Promise<void> {
+        console.log(ctx.request.body)
+        const basicArray = Object.values(ctx.request.body).map((item: System)=>pick(item, ['id', 'value', 'sort']))
+        const systemRepository:Repository<System> = getManager().getRepository(System)
+
+        const errors: ValidationError[] = await validate(basicArray)
 
         if (errors.length > 0){
             new Result(ctx).error(errors)
             return
         }
-        if (!await systemRepository.findOne({id})){
-            new Result(ctx).error('用户不存在')
-            return
-        }
         await Config.updateConfig()
-        await systemRepository.save(newSyetem)
-        new Result(ctx).success({}, (newSyetem.id === 0 ? '修改' : '添加') + '成功')
+        await systemRepository.save(basicArray)
+        new Result(ctx).success()
     }
 
     @request('get', '/basic/del/{id}')

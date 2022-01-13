@@ -1,20 +1,20 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
-import {IsAlpha, Length, IsInt} from 'class-validator'
+import {Entity, Column, PrimaryGeneratedColumn, Index} from 'typeorm'
+import {IsAlpha, Length} from 'class-validator'
 @Entity()
 export class System {
     @PrimaryGeneratedColumn()
-    @IsInt()
     id: number
 
     @Column({
         'length': 50
     })
     @IsAlpha('en-US', {
-        'message': '仅限小写字母'
+        'message': '名称仅限英文字母'
     })
     @Length(1, 30, {
         'message': '名称1-10个字'
     })
+    @Index({'unique': true})
     name: string
 
     @Column({

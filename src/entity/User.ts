@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
+import {Entity, Column, PrimaryGeneratedColumn, Index} from 'typeorm'
 import {IsNotEmpty, Length} from 'class-validator'
 
 @Entity()
@@ -18,6 +18,7 @@ export class User {
         'message': '用户名不能为空',
         'groups': ['admin']
     })
+    @Index({'unique': true})
     username: string
 
     @Column({
@@ -41,6 +42,7 @@ export class User {
         'message': 'openid不能为空',
         'groups': ['wx']
     })
+    @Index({'unique': true})
     openid: string
 
     @Column({
