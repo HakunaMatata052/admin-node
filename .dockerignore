@@ -10,3 +10,4 @@ loadtests
 docker-compose.yml
 LICENSE
 README.md
+db

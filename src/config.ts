@@ -36,7 +36,7 @@ export const sql :ConnectionOptions = isDevMode ? {
     'host': 'localhost',
     'port': 3306,
     'username': 'wenjuan',
-    'password': 'xHNLXRh7tjs4bKdF',
+    'password': 'pwTLEac2chBSDBYe',
     'database': 'wenjuan',
     'entities': [path.join(__dirname, 'entity/**/*')],
     'synchronize': true

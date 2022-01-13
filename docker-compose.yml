@@ -1,17 +1,22 @@
+# Use root/example as user/password credentials
 version: '3.1'
-services :
-  db:
-    image: postgres:10-alpine
+
+services:
+  web:
+    image: node:14-alpine
+    working_dir: /code
+    volumes:
+            - .:/code
     ports:
-      - "5432:5432"
+            - "3000:3000"
+    command: npm run watch-server
+  mysql:
+    image: mysql:5.6
+    volumes:
+            - ./db:/var/lib/mysql
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: apidb
-  admin:
-    image: adminer
-    restart: always
-    depends_on: 
-      - db
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=server
     ports:
-      - 8080:8080
+            - "3306:3306"
+  

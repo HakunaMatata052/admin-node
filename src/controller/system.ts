@@ -49,6 +49,7 @@ export default class systemController {
         await systemRepository.save(system)
         new Result(ctx).success()
     }
+
     @request('post', '/basic/edit')
     @summary('修改基本配置')
     @body([{
