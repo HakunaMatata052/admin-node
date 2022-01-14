@@ -24,7 +24,7 @@ export interface MiniApp {
 
 export const sql :ConnectionOptions = isDevMode ? {
     'type': 'mysql',
-    'host': 'localhost',
+    'host': 'mysql',
     'port': 3306,
     'username': 'root',
     'password': 'root',

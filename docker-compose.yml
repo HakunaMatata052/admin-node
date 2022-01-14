@@ -2,7 +2,7 @@
 version: '3.1'
 
 services:
-  web:
+  api:
     image: node:14-alpine
     working_dir: /code
     volumes:
@@ -11,12 +11,18 @@ services:
             - "3000:3000"
     command: npm run watch-server
   mysql:
-    image: mysql:5.6
+    image: mysql:5.7
     volumes:
-            - ./db:/var/lib/mysql
+            - ./data:/var/lib/mysql
     environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=server
     ports:
             - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
   

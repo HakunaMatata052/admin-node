@@ -21,7 +21,6 @@ import {error} from './common/error'
 //         'rejectUnauthorized': false // Heroku uses self signed certificates
 //     }
 // }
-console.log(Config.sql)
 // create connection with database
 // note that its not active database connection
 // TypeORM creates you connection pull to uses connections from pull on your requests
