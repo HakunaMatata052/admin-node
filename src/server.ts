@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import jwt from 'koa-jwt'
+import http from 'http'
 import bodyParser from 'koa-bodyparser'
 import helmet from 'koa-helmet'
 import cors from '@koa/cors'
@@ -15,6 +16,8 @@ import {protectedRouter} from './protectedRoutes'
 import {cron} from './cron'
 import {checkToken, customError} from './common/auth'
 import {error} from './common/error'
+
+import {Socket} from './controller/socket'
 
 // if (connectionOptions.ssl) {
 //     connectionOptions.extra.ssl = {
@@ -39,6 +42,9 @@ createConnection(Config.sql).then(async () => {
         }
     }))
 
+    const server = http.createServer(app.callback())
+
+    new Socket(server) // 启动Socket
     // 跨域解决
     app.use(cors())
     // 获取静态资源文件夹
@@ -63,8 +69,8 @@ createConnection(Config.sql).then(async () => {
     // 定时任务开启
     cron.start()
 
-    app.listen(Config.port, () => {
-        console.log(`Server running on port ${Config.port}`)
+    server.listen(Config.port, () => {
+        console.log(`启动成功 端口：${Config.port}`)
     })
 
 }).catch((err: string) => console.log('TypeORM connection error: ', err))

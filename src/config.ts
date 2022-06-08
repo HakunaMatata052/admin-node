@@ -24,7 +24,7 @@ export interface MiniApp {
 
 export const sql :ConnectionOptions = isDevMode ? {
     'type': 'mysql',
-    'host': 'mysql',
+    'host': 'localhost',
     'port': 3306,
     'username': 'root',
     'password': 'root',
@@ -46,7 +46,7 @@ export class Config {
     static sql=sql
     static debugLogging= isDevMode
     static staticDir = path.join(__dirname, '/public')
-    static jwtSecret= fs.readFileSync(path.join(__dirname, './ssl/key.pem'))
+    static jwtSecret= fs.readFileSync(path.join(__dirname, './ssl/privatekey.pem'))
     static cronJobExpression= '0 * * * *'
     static miniapp:MiniApp= {
         'appid': '',
